@@ -1,0 +1,26 @@
+{
+    "name": "baethon/union",
+    "description": "Union type for PHP",
+    "type": "library",
+    "require-dev": {
+        "phpunit/phpunit": "^7.2"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Radoslaw Mejer",
+            "email": "radmen@radmen.info"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Baethon\\Union\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Test\\": "test"
+        }
+    }
+}
