@@ -90,4 +90,13 @@ class AbstractUnionTest extends \PHPUnit\Framework\TestCase
             'OhNoes' => function () {}
         ]);
     }
+
+    public function test_it_can_create_new_instance_from_objects_context()
+    {
+        $maybe = MaybeStub::Some(1);
+        $otherMaybe = $maybe->Some(2);
+
+        $this->assertInstanceOf(MaybeStub::class ,$otherMaybe);
+        $this->assertNotSame($maybe, $otherMaybe);
+    }
 }

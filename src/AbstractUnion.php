@@ -30,7 +30,13 @@ abstract class AbstractUnion
             return $this->isType($name);
         }
 
-        throw new \BadMethodCallException("Unknown method: {$name}");
+        // apparently PHP is not willing to use __callStatic when
+        // a static call is done from objects context
+        //
+        // this way we need to "emulate" this behaviour
+        //
+        // @see https://donatstudios.com/PHP-Static-Nonsense
+        return $this->__callStatic($name, $arguments);
     }
 
     final public function matchWith(array $mapping)
