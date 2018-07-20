@@ -42,7 +42,7 @@ class AbstractUnionTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(2, $value);
     }
 
-    public function test_match_with_can_be_used_with_string_types()
+    public function test_matchWith_can_be_used_with_string_types()
     {
         $maybe = MaybeStub::Some(1);
         $value = $maybe->matchWith([
@@ -57,7 +57,7 @@ class AbstractUnionTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(2, $value);
     }
 
-    public function test_match_with_can_use_wildcard_type()
+    public function test_matchWith_can_use_wildcard_type()
     {
         $maybe = MaybeStub::Some(1);
         $value = $maybe->matchWith([
@@ -67,5 +67,27 @@ class AbstractUnionTest extends \PHPUnit\Framework\TestCase
         ]);
 
         $this->assertEquals(2, $value);
+    }
+
+    public function test_matchWith_throws_exception_on_partial_mapping()
+    {
+        $this->expectException(\UnderflowException::class);
+
+        $maybe = MaybeStub::Some(1);
+        $maybe->matchWith([
+            'Some' => function () {}
+        ]);
+    }
+
+    public function test_matchWith_throws_exception_on_exceeded_mapping()
+    {
+        $this->expectException(\OverflowException::class);
+
+        $maybe = MaybeStub::Some(1);
+        $maybe->matchWith([
+            'Some' => function () {},
+            'None' => function () {},
+            'OhNoes' => function () {}
+        ]);
     }
 }

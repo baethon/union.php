@@ -33,8 +33,10 @@ abstract class AbstractUnion
         throw new \BadMethodCallException("Unknown method: {$name}");
     }
 
-    public function matchWith(array $mapping)
+    final public function matchWith(array $mapping)
     {
+        $this->validateTagsMapping($mapping);
+
         $arguments = $this->taggedValue->getArguments();
 
         foreach ($mapping as $signature => $callback) {
@@ -45,8 +47,37 @@ abstract class AbstractUnion
             return $callback(...$arguments);
         }
 
-        if (true === array_key_exists('*', $mapping)) {
-            return $mapping['*'](...$arguments);
+        // validateTagsMapping() should take care of checking if there's a wildcard handler
+        // we can simply call it
+        return $mapping['*'](...$arguments);
+    }
+
+    /**
+     * Checks if provided mapping covers all defined tags
+     *
+     * @param array $mapping
+     * @return void
+     * @throw \UnderflowException when not all tags are covered by mapping
+     * @throw \OverflowException when there are more than defined tags covered by mapping
+     */
+    private function validateTagsMapping(array $mapping)
+    {
+        $castToType = function (string $signature) {
+            return TagSignature::fromString($signature)->getType();
+        };
+
+        $hasWildcard = array_key_exists('*', $mapping);
+        unset($mapping['*']);
+
+        $definedConsts = array_map($castToType, array_values($this->getConstants()));
+        $coveredTypes = array_map($castToType, array_keys($mapping));
+
+        if ([] !== array_diff($coveredTypes, $definedConsts)) {
+            throw new \OverflowException('Possibly non-existing tags are mapped.');
+        }
+
+        if (false === $hasWildcard && [] !== array_diff($definedConsts, $coveredTypes)) {
+            throw new \UnderflowException('Not all tags are covered.');
         }
     }
 
