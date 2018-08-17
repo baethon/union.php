@@ -43,7 +43,9 @@ final class TaggedValue
         $parametersLength = count($signature->getParameters());
 
         if ($argumentsLength !== $parametersLength) {
-            throw new \LengthException("Tag {$signature->getType()} requires {$parametersLength} arguments, {$argumentsLength} provided.");
+            throw new \LengthException(
+                "Tag {$signature->getType()} requires {$parametersLength} arguments, {$argumentsLength} provided."
+            );
         }
     }
 }
