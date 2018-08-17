@@ -14,5 +14,5 @@ install:
   - composer install
 
 script:
-  # - composer lint
+  - composer lint
   - vendor/bin/phpunit

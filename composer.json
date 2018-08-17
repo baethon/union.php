@@ -2,9 +2,6 @@
     "name": "baethon/union",
     "description": "Union type for PHP",
     "type": "library",
-    "require-dev": {
-        "phpunit/phpunit": "^7.2"
-    },
     "license": "MIT",
     "authors": [
         {
@@ -12,7 +9,18 @@
             "email": "radmen@radmen.info"
         }
     ],
-    "require": {},
+    "scripts": {
+        "lint": "phpcs --standard=psr2 src/",
+        "lint:fix": "php-cs-fixer fix src/ --rules=@PSR2"
+    },
+    "require": {
+        "php": ">=7.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.2",
+        "squizlabs/php_codesniffer": "^3.3",
+        "friendsofphp/php-cs-fixer": "^2.12"
+    },
     "autoload": {
         "psr-4": {
             "Baethon\\Union\\": "src"
