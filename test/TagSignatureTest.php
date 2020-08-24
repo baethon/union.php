@@ -15,7 +15,7 @@ class TagSignatureTest extends \PHPUnit\Framework\TestCase
         array $expectedParameters) {
         $tag = TagSignature::fromString($signature);
 
-        $this->assertEquals($expectedType, $tag->getType());
+        $this->assertSame($expectedType, $tag->getType());
         $this->assertEquals($expectedParameters, $tag->getParameters());
     }
 

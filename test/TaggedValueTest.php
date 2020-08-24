@@ -9,7 +9,7 @@ class TaggedValueTest extends \PHPUnit\Framework\TestCase
 {
     private $signature;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->signature = TagSignature::fromString('Some:x');
     }
