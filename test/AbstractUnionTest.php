@@ -39,7 +39,7 @@ class AbstractUnionTest extends \PHPUnit\Framework\TestCase
             }
         ]);
 
-        $this->assertEquals(2, $value);
+        $this->assertSame(2, $value);
     }
 
     public function test_matchWith_can_be_used_with_string_types()
@@ -54,7 +54,7 @@ class AbstractUnionTest extends \PHPUnit\Framework\TestCase
             }
         ]);
 
-        $this->assertEquals(2, $value);
+        $this->assertSame(2, $value);
     }
 
     public function test_matchWith_can_use_wildcard_type()
@@ -66,7 +66,7 @@ class AbstractUnionTest extends \PHPUnit\Framework\TestCase
             }
         ]);
 
-        $this->assertEquals(2, $value);
+        $this->assertSame(2, $value);
     }
 
     public function test_matchWith_throws_exception_on_partial_mapping()
